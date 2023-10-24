@@ -1,0 +1,71 @@
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## User settings
+xcuserdata/
+
+## Compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
+*.xcscmblueprint
+*.xccheckout
+
+## Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+##
+## User settings
+xcuserdata/
+
+## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
+*.xcscmblueprint
+*.xccheckout
+
+## Xcode Patch
+*.swp
+*~
+# .DS_Store
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Xcode 4
+# Deprecated - still used in some projects
+*.moved-aside
+DerivedData/
+Icon?
+Profile?
+
+## Xcode 5
+*.xcuserdata
+
+## Xcode 6
+*.xccheckout
+
+## Xcode 8
+*.swiftdoc
+
+## Xcode Schemes
+xcshareddata/
+.xcscheme
+
+## Xcode Bots
+.xcactivitylog
+
+## AppCode
+.idea/
+
+## Carthage
+/Carthage/Build/
+
+## Fastlane
+/ fastlane/report.xml
+
+## CocoaPods
+Pods/
+
+## Build generated
+Build/
+
+## Mint
+Mintfile

@@ -8,10 +8,27 @@
 import SwiftUI
 import ReefReferral
 
-struct ContentView: View {
+struct ContentView: View, ReefReferralDelegate {
     
-    @State private var referralLink: ReferralLinkContent?
-    @State private var referralID: String?
+    func didReceiveReferralStatuses(_ statuses: [ReferralStatus]) {
+        print("didReceiveReferralStatuses: \(statuses)")
+        self.statuses = statuses
+    }
+        
+    func wasReferredSuccessfully() {
+        print("wasReferredSuccessfully")
+        self.referralID = ReefReferral.shared.data.referralId
+        ReefReferral.shared.checkReferralStatuses()
+    }
+    
+    func wasConvertedSuccessfully() {
+        ReefReferral.shared.checkReferralStatuses()
+    }
+
+    @Environment(\.openURL) var openURL
+    
+    @State private var referralLink: ReferralLinkContent? = ReefReferral.shared.data.referralLink
+    @State private var referralID: String? = ReefReferral.shared.data.referralId
     @State private var statuses: [ReferralStatus] = []
     
     var body: some View {
@@ -19,8 +36,9 @@ struct ContentView: View {
             List {
                 Section(header: Text("Referring user")) {
                     if let link = referralLink {
-                        Text("reef-referral://\(link.id)")
-                        
+                        Button(link.link_url) {
+                            openURL(URL(string: link.link_url)!)
+                        }
                     } else {
                         Button("Generate Referral Link") {
                             Task {
@@ -35,6 +53,7 @@ struct ContentView: View {
                         Task {
                             referralLink = nil
                             ReefReferral.shared.clearLink()
+                            ReefReferral.shared.checkReferralStatuses()
                         }
                     }.foregroundColor(Color.red)
                 }
@@ -42,45 +61,39 @@ struct ContentView: View {
                 Section(header: Text("Referred user")) {
                     if let ref = referralID {
                         Text(ref)
-                    } else {
-                        Button("Trigger Handle Deeplink") {
-                            Task {
-                                guard let link = referralLink,
-                                      let url = URL(string:link.link_url)
-                                else { return }
-                                await ReefReferral.shared.handleDeepLink(url:url)
-                                referralID = ReefReferral.shared.data.referralId
-                            }
+                        Button("Trigger Referral Success") {
+                            ReefReferral.shared.triggerReferralSuccess()
                         }
-                    }
-                    Button("Trigger Referral Success") {
-                        Task {
-                            await ReefReferral.shared.triggerReferralSuccess()
-                        }
-                    }
-                    Button("Clear referral ID") {
-                        Task {
+                        Button("Clear referral ID") {
                             referralID = nil
                             ReefReferral.shared.clearReferralID()
-                        }
-                    }.foregroundColor(Color.red)
+                        }.foregroundColor(Color.red)
+                    } else {
+                        Text("No referral ID")
+                    }
                 }
 
                 Section(header: Text("Referrals Status")) {
-                    Text("\(statuses.filter({ $0.status == .received }).count) received")
-                    Text("\(statuses.filter({ $0.status == .success }).count) success")
+                    Text("\(self.statuses.filter({ $0.status == .received }).count) received")
+                    Text("\(self.statuses.filter({ $0.status == .success }).count) success")
                     Button("Refresh") {
-                        Task{
-                            statuses = await ReefReferral.shared.checkReferralStatuses()
-                        }
+                        ReefReferral.shared.checkReferralStatuses()
                     }
                 }
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Reef Referral", displayMode: .large)
+            .onAppear {
+                ReefReferral.shared.start(apiKey:"f342a916-d682-4798-979e-873a74cc0b33", delegate: self)
+                ReefReferral.shared.checkReferralStatuses()
+            }
+            .onOpenURL { url in
+                ReefReferral.shared.handleDeepLink(url: url)
+            }
         }
     }
 }
+
 
 #Preview {
     ContentView()

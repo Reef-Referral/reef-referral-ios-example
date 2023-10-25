@@ -22,6 +22,7 @@ struct ContentView: View, ReefReferralDelegate {
     }
     
     func wasConvertedSuccessfully() {
+        print("wasConvertedSuccessfully")
         ReefReferral.shared.checkReferralStatuses()
     }
 
@@ -87,6 +88,7 @@ struct ContentView: View, ReefReferralDelegate {
             .navigationBarTitle("Reef Referral", displayMode: .large)
             .onAppear {
                 ReefReferral.shared.start(apiKey:"f342a916-d682-4798-979e-873a74cc0b33", delegate: self)
+                ReefReferral.logger.logLevel = .trace
                 ReefReferral.shared.checkReferralStatuses()
             }
             .onOpenURL { url in

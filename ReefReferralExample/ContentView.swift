@@ -53,7 +53,9 @@ struct ContentView: View, ReefReferralDelegate {
                         Task {
                             referralLink = nil
                             ReefReferral.shared.clearLink()
-                            ReefReferral.shared.checkReferralStatuses()
+                            referralID = nil
+                            ReefReferral.shared.clearReferralID()
+                            statuses = []
                         }
                     }.foregroundColor(Color.red)
                 }

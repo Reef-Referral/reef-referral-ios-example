@@ -8,29 +8,42 @@
 import SwiftUI
 import ReefReferral
 
-struct ContentView: View, ReefReferralDelegate {
+
+extension ContentView: ReefReferralDelegate {
     
-    func didReceiveReferralStatuses(_ statuses: [ReferralStatus]) {
-        print("didReceiveReferralStatuses: \(statuses)")
-        self.statuses = statuses
+    func didReceiveReferralStatus(referralReceived: Int, referralSuccess: Int, rewardEligibility: RewardStatus) {
+        print("didReceiveReferralStatus")
+        self.referralReceived = referralReceived
+        self.referralSuccess = referralSuccess
+        self.rewardEligibility = rewardEligibility
     }
-        
-    func wasReferredSuccessfully() {
-        print("wasReferredSuccessfully")
+    
+    func referredUserDidReceiveReferral() {
+        print("referredUserDidReceiveReferral")
         self.referralID = ReefReferral.shared.data.referralId
-        ReefReferral.shared.checkReferralStatuses()
+        ReefReferral.shared.checkReferralStatus()
     }
     
-    func wasConvertedSuccessfully() {
-        print("wasConvertedSuccessfully")
-        ReefReferral.shared.checkReferralStatuses()
+    func referredUserDidClaimReferral() {
+        print("referredUserDidClaimReferral")
+        ReefReferral.shared.checkReferralStatus()
     }
+    
+    func referringUserDidClaimReward() {
+        print("referringUserDidClaimReward")
+    }
+    
+}
+
+struct ContentView: View {
 
     @Environment(\.openURL) var openURL
     
     @State private var referralLink: ReferralLinkContent? = ReefReferral.shared.data.referralLink
     @State private var referralID: String? = ReefReferral.shared.data.referralId
-    @State private var statuses: [ReferralStatus] = []
+    @State private var referralReceived: Int = 0
+    @State private var referralSuccess: Int = 0
+    @State private var rewardEligibility: RewardStatus = .not_eligible
     
     var body: some View {
         NavigationView {
@@ -40,6 +53,20 @@ struct ContentView: View, ReefReferralDelegate {
                         Button(link.link_url) {
                             openURL(URL(string: link.link_url)!)
                         }
+                        Button("Claim Reward") {
+                            openURL(URL(string: link.link_url)!)
+                        }
+                        Button("Clear Referral Link") {
+                            Task {
+                                referralLink = nil
+                                ReefReferral.shared.clearLink()
+                                referralID = nil
+                                ReefReferral.shared.clearReferralID()
+                                referralReceived = 0
+                                referralSuccess = 0
+                                rewardEligibility = .not_eligible
+                            }
+                        }.foregroundColor(Color.red)
                     } else {
                         Button("Generate Referral Link") {
                             Task {
@@ -50,15 +77,7 @@ struct ContentView: View, ReefReferralDelegate {
                             }
                         }
                     }
-                    Button("Clear Referral Link") {
-                        Task {
-                            referralLink = nil
-                            ReefReferral.shared.clearLink()
-                            referralID = nil
-                            ReefReferral.shared.clearReferralID()
-                            statuses = []
-                        }
-                    }.foregroundColor(Color.red)
+                    
                 }
                 
                 Section(header: Text("Referred user")) {
@@ -77,10 +96,11 @@ struct ContentView: View, ReefReferralDelegate {
                 }
 
                 Section(header: Text("Referrals Status")) {
-                    Text("\(self.statuses.filter({ $0.status == .received }).count) received")
-                    Text("\(self.statuses.filter({ $0.status == .success }).count) success")
+                    Text("\(self.referralReceived) received")
+                    Text("\(self.referralSuccess) success")
+                    Text("Reward Eligibility : \(self.rewardEligibility.rawValue)")
                     Button("Refresh") {
-                        ReefReferral.shared.checkReferralStatuses()
+                        ReefReferral.shared.checkReferralStatus()
                     }
                 }
             }
@@ -89,7 +109,7 @@ struct ContentView: View, ReefReferralDelegate {
             .onAppear {
                 ReefReferral.shared.start(apiKey:"f342a916-d682-4798-979e-873a74cc0b33", delegate: self)
                 ReefReferral.logger.logLevel = .trace
-                ReefReferral.shared.checkReferralStatuses()
+                ReefReferral.shared.checkReferralStatus()
             }
             .onOpenURL { url in
                 ReefReferral.shared.handleDeepLink(url: url)

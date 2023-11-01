@@ -8,6 +8,7 @@
 import SwiftUI
 import ReefReferral
 
+let API_KEY = "976f07dc-6972-4e81-8497-64dfc4904abd";
 
 extension ContentView: ReefReferralDelegate {
     
@@ -31,6 +32,7 @@ extension ContentView: ReefReferralDelegate {
     
     func referringUserDidClaimReward() {
         print("referringUserDidClaimReward")
+        ReefReferral.shared.checkReferralStatus()
     }
     
 }
@@ -53,8 +55,8 @@ struct ContentView: View {
                         Button(link.link_url) {
                             openURL(URL(string: link.link_url)!)
                         }
-                        Button("Claim Reward") {
-                            openURL(URL(string: link.link_url)!)
+                        Button("Trigger Referring Success") {
+                            ReefReferral.shared.triggerReferringSuccess()
                         }
                         Button("Clear Referral Link") {
                             Task {
@@ -77,7 +79,6 @@ struct ContentView: View {
                             }
                         }
                     }
-                    
                 }
                 
                 Section(header: Text("Referred user")) {
@@ -107,7 +108,7 @@ struct ContentView: View {
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Reef Referral", displayMode: .large)
             .onAppear {
-                ReefReferral.shared.start(apiKey:"f342a916-d682-4798-979e-873a74cc0b33", delegate: self)
+                ReefReferral.shared.start(apiKey:API_KEY, delegate: self)
                 ReefReferral.logger.logLevel = .trace
                 ReefReferral.shared.checkReferralStatus()
             }

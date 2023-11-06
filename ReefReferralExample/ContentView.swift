@@ -8,7 +8,8 @@
 import SwiftUI
 import ReefReferral
 
-let API_KEY = "976f07dc-6972-4e81-8497-64dfc4904abd";
+let API_KEY = "9c7b2de7-12be-4e64-848b-cbecd308db1f";
+
 struct ContentView: View {
     @Environment(\.openURL) var openURL
 
@@ -22,32 +23,22 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Referring user")) {
-                    if let link = reefReferralObservable.referralLink {
-                        Button(link.link_url) {
-                            openURL(URL(string: link.link_url)!)
+                Section(header: Text("Referral link URL")) {
+                    if let linkURL = reefReferralObservable.referralLinkURL {
+                        Button(linkURL.absoluteString) {
+                            openURL(linkURL)
                         }
                         Button("Trigger Referring Success") {
                             ReefReferral.shared.triggerReferringSuccess()
                         }
-                        Button("Clear Referral Link") {
+                        Button("Clear Referral") {
                             Task {
-                                reefReferralObservable.referralLink = nil
-                                ReefReferral.shared.clearLink()
-                                reefReferralObservable.referralID = nil
-                                ReefReferral.shared.clearReferralID()
+                                ReefReferral.shared.clear()
                             }
                         }
                         .foregroundColor(Color.red)
                     } else {
-                        Button("Generate Referral Link") {
-                            Task {
-                                reefReferralObservable.referralLink = await ReefReferral.shared.generateReferralLink()
-                                if let link = reefReferralObservable.referralLink {
-                                    UIPasteboard.general.string = "reef-referral://\(link.id)"
-                                }
-                            }
-                        }
+                        Text("No info")
                     }
                 }
 
@@ -59,7 +50,7 @@ struct ContentView: View {
                 
                 Section() {
                     Button("Refresh Status") {
-                        ReefReferral.shared.checkReferralStatus()
+                        ReefReferral.shared.status()
                     }
                 }
             }
@@ -68,7 +59,7 @@ struct ContentView: View {
             .onAppear {
                 ReefReferral.shared.start(apiKey: API_KEY, delegate: reefReferralObservable)
                 ReefReferral.logger.logLevel = .trace
-                ReefReferral.shared.checkReferralStatus()
+                ReefReferral.shared.status()
             }
             .onOpenURL { url in
                 ReefReferral.shared.handleDeepLink(url: url)

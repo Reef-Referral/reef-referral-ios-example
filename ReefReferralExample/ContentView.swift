@@ -38,9 +38,12 @@ struct ContentView: View {
                                 openURL(rewardURL)
                             }
                         }
-                        Button("Trigger Referring Success") {
-                            ReefReferral.shared.triggerReferringSuccess()
+                        if rewardEligibility != .granted {
+                            Button("Trigger Referring Success") {
+                                ReefReferral.shared.triggerReferringSuccess()
+                            }
                         }
+                        
                         Button("Clear Referral") {
                             Task {
                                 ReefReferral.shared.clear()
@@ -74,7 +77,6 @@ struct ContentView: View {
             .onAppear {
                 ReefReferral.shared.start(apiKey: API_KEY, delegate: self)
                 ReefReferral.logger.logLevel = .trace
-                ReefReferral.shared.status()
             }
             .onOpenURL { url in
                 ReefReferral.shared.handleDeepLink(url: url)

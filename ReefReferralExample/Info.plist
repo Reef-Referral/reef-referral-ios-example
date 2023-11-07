@@ -11,7 +11,7 @@
 			<string>comm.reef-referral.example</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>reef-referral</string>
+				<string>reef-referral-hello</string>
 			</array>
 		</dict>
 	</array>

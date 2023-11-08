@@ -8,7 +8,7 @@
 import SwiftUI
 import ReefReferral
 
-let API_KEY = "9c7b2de7-12be-4e64-848b-cbecd308db1f"
+let API_KEY = "12b5831a-c4eb-4855-878f-e5fdacce8e18"
 
 struct ContentView: View {
     @Environment(\.openURL) var openURL

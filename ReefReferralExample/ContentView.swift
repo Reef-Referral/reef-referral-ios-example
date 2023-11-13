@@ -13,24 +13,38 @@ let API_KEY = "12b5831a-c4eb-4855-878f-e5fdacce8e18"
 struct ContentView: View {
     @Environment(\.openURL) var openURL
     @ObservedObject private var reef = ReefReferral.shared
+    @State private var showingReferralSheet = false
 
     var body: some View {
         NavigationView {
             List {
+                Section(header: Text("UI")) {
+                    Button("Show Referral Sheet") {
+                        showingReferralSheet = true
+                    }
+                    .sheet(isPresented: $showingReferralSheet) {
+                        ReefReferralSheetView(apiKey:API_KEY,
+                                              image: UIImage(imageLiteralResourceName: "share"),
+                                              title: "One month free!",
+                                              subtitle: "Invite your friends and claim your free month",
+                                              description: "Your friends also get a free month, so it's a win for everyone!",
+                                              footnote: "This is a footnote")
+                    }
+                }
                 Section(header: Text("Referring Status")) {
-                    if let linkURL = reef.referringLinkURL { // Access reef object properties
+                    if let linkURL = reef.referringLinkURL {
                         Button(linkURL.absoluteString) {
                             openURL(linkURL)
                         }
                         Text("\(reef.receivedCount) received")
-                        Text("\(reef.successCount) success")
+                        Text("\(reef.redeemedCount) success")
                         Text("\(reef.rewardEligibility.rawValue)")
-                        if let rewardURL = reef.rewardURL {
+                        if let rewardURL = reef.referredRewardOfferCodeURL {
                             Button(rewardURL.absoluteString) {
                                 openURL(rewardURL)
                             }
                         }
-                        if reef.rewardEligibility != .granted {
+                        if reef.rewardEligibility != .redeemed {
                             Button("Trigger Referring Success") {
                                 reef.triggerReferringSuccess()
                             }
@@ -50,7 +64,7 @@ struct ContentView: View {
                 Section(header: Text("Referred Status")) {
                     if reef.referredStatus != .none {
                         Text(reef.referredStatus.rawValue)
-                        if let referredOfferURL = reef.referredOfferURL {
+                        if let referredOfferURL = reef.referredRewardOfferCodeURL {
                             Button(referredOfferURL.absoluteString) {
                                 openURL(referredOfferURL)
                             }
@@ -66,12 +80,7 @@ struct ContentView: View {
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Reef Referral", displayMode: .large)
-            .onAppear {
-                reef.start(apiKey: API_KEY, logLevel: .trace)
-            }
-            .onOpenURL { url in
-                reef.handleDeepLink(url: url)
-            }
+            
         }
     }
 }

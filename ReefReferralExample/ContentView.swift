@@ -31,22 +31,26 @@ struct ContentView: View {
                                               footnote: "This is a footnote")
                     }
                 }
-                Section(header: Text("Referring Status")) {
-                    if let linkURL = reef.referringLinkURL {
+                
+                Section(header: Text("Sender Status")) {
+                    if let linkURL = reef.senderLinkURL {
+                        
                         Button(linkURL.absoluteString) {
                             openURL(linkURL)
                         }
-                        Text("\(reef.receivedCount) received")
-                        Text("\(reef.redeemedCount) success")
-                        Text("\(reef.rewardEligibility.rawValue)")
-                        if let rewardURL = reef.referredRewardOfferCodeURL {
+                        
+                        Text("\(reef.senderLinkReceivedCount) received")
+                        Text("\(reef.senderLinkRedeemedCount) redeemed")
+                        Text("\(reef.senderRewardEligibility.rawValue)")
+                        
+                        if let rewardURL = reef.senderRewardCodeURL {
                             Button(rewardURL.absoluteString) {
                                 openURL(rewardURL)
                             }
                         }
-                        if reef.rewardEligibility != .redeemed {
+                        if reef.senderRewardEligibility != .redeemed {
                             Button("Trigger Referring Success") {
-                                reef.triggerReferringSuccess()
+                                reef.triggerSenderSuccess()
                             }
                         }
                         
@@ -56,21 +60,22 @@ struct ContentView: View {
                             }
                         }
                         .foregroundColor(Color.red)
+                        
                     } else {
                         Text("No info")
                     }
                 }
                 
-                Section(header: Text("Referred Status")) {
-                    if reef.referredStatus != .none {
-                        Text(reef.referredStatus.rawValue)
-                        if let referredOfferURL = reef.referredRewardOfferCodeURL {
-                            Button(referredOfferURL.absoluteString) {
-                                openURL(referredOfferURL)
+                Section(header: Text("Receiver Status")) {
+                    if reef.receiverStatus != .none {
+                        Text(reef.receiverStatus.rawValue)
+                        if let receiverOfferCodeURL = reef.receiverOfferCodeURL {
+                            Button(receiverOfferCodeURL.absoluteString) {
+                                openURL(receiverOfferCodeURL)
                             }
                         }
                         Button("Trigger Referral Success") {
-                            reef.triggerReferralSuccess()
+                            reef.triggerReceiverSuccess()
                         }
                     } else {
                         Text("Not a referred user")
@@ -83,8 +88,4 @@ struct ContentView: View {
             
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

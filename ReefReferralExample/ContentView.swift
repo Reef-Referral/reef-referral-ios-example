@@ -8,7 +8,8 @@
 import SwiftUI
 import ReefReferral
 
-let API_KEY = "12b5831a-c4eb-4855-878f-e5fdacce8e18"
+//let API_KEY = "12b5831a-c4eb-4855-878f-e5fdacce8e18" //Prod
+let API_KEY = "8e599760-ec74-49fa-97dc-9f5162a1ac30" // Dev
 
 struct ContentView: View {
     @Environment(\.openURL) var openURL
@@ -42,6 +43,10 @@ struct ContentView: View {
                         Text("\(reef.senderLinkReceivedCount) received")
                         Text("\(reef.senderLinkRedeemedCount) redeemed")
                         Text("\(reef.senderRewardEligibility.rawValue)")
+                        
+                        Button("Check purchases") {
+                            reef.checkPurchases()
+                        }
                         
                         if let rewardURL = reef.senderRewardCodeURL {
                             Button(rewardURL.absoluteString) {

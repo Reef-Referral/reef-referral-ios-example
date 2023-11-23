@@ -44,10 +44,6 @@ struct ContentView: View {
                         Text("\(reef.senderLinkRedeemedCount) redeemed")
                         Text("\(reef.senderRewardEligibility.rawValue)")
                         
-                        Button("Check purchases") {
-                            reef.checkPurchases()
-                        }
-                        
                         if let rewardURL = reef.senderRewardCodeURL {
                             Button(rewardURL.absoluteString) {
                                 openURL(rewardURL)

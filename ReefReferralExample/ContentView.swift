@@ -36,6 +36,10 @@ struct ContentView: View {
                 Section(header: Text("Sender Status")) {
                     if let linkURL = reef.senderLinkURL {
                         
+                        Button("Set custom ID") {
+                            ReefReferral.shared.setUserId("custom_id_test")
+                        }
+                        
                         Button(linkURL.absoluteString) {
                             openURL(linkURL)
                         }

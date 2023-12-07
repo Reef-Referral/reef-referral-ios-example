@@ -76,7 +76,7 @@ struct ContentView: View {
                     }
 
                     Section(header: Text("Receiver Status")) {
-                        if reef.receiverInfo.rewardEligibility != ReefReferral.ReceiverOfferStatus.none {
+                        if reef.receiverInfo.rewardEligibility != ReefReferral.ReceiverOfferStatus.not_eligible {
                             Text(reef.receiverInfo.rewardEligibility.rawValue )
                             if let receiverOfferCodeURL = reef.receiverInfo.offerCodeURL {
                                 Button(receiverOfferCodeURL.absoluteString) {

@@ -8,7 +8,7 @@
 import SwiftUI
 import ReefReferral
 
-let API_KEY = "5a932cb0-efe5-44c4-a0af-11499ccf15d1"
+let API_KEY = "12b5831a-c4eb-4855-878f-e5fdacce8e18"
 
 extension ContentView {
     class ViewModel: ObservableObject, ReefReferralDelegate {

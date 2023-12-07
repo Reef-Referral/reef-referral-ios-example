@@ -7,21 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2414388A2B21FF66006E8062 /* ReefReferral in Frameworks */ = {isa = PBXBuildFile; productRef = 241438892B21FF66006E8062 /* ReefReferral */; };
+		2474C73C2B2113EF00B69979 /* ReefReferral in Frameworks */ = {isa = PBXBuildFile; productRef = 2474C73B2B2113EF00B69979 /* ReefReferral */; };
+		2474C73E2B21164C00B69979 /* ReferralSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2474C73D2B21164C00B69979 /* ReferralSheetView.swift */; };
 		FA9101E32AE717120010CB88 /* ReefReferralExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9101E22AE717120010CB88 /* ReefReferralExampleApp.swift */; };
 		FA9101E52AE717120010CB88 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9101E42AE717120010CB88 /* ContentView.swift */; };
 		FA9101E72AE717160010CB88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA9101E62AE717160010CB88 /* Assets.xcassets */; };
 		FA9101EB2AE717160010CB88 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA9101EA2AE717160010CB88 /* Preview Assets.xcassets */; };
-		FA9102152AE720160010CB88 /* ReefReferral in Frameworks */ = {isa = PBXBuildFile; productRef = FA9102142AE720160010CB88 /* ReefReferral */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2474C73A2B2113BE00B69979 /* reef-referral-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "reef-referral-ios"; path = "../../Weather_on_the_Way/App/reef-referral-ios"; sourceTree = "<group>"; };
+		2474C73D2B21164C00B69979 /* ReferralSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferralSheetView.swift; sourceTree = "<group>"; };
 		FA9101DF2AE717120010CB88 /* ReefReferralExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReefReferralExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA9101E22AE717120010CB88 /* ReefReferralExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReefReferralExampleApp.swift; sourceTree = "<group>"; };
 		FA9101E42AE717120010CB88 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FA9101E62AE717160010CB88 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA9101E82AE717160010CB88 /* ReefReferralExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ReefReferralExample.entitlements; sourceTree = "<group>"; };
 		FA9101EA2AE717160010CB88 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		FAFF119B2AE7246100F233CB /* reef-referral-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "reef-referral-ios"; path = "../reef-referral-ios"; sourceTree = "<group>"; };
 		FAFF119D2AE7320700F233CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -30,7 +33,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA9102152AE720160010CB88 /* ReefReferral in Frameworks */,
+				2474C73C2B2113EF00B69979 /* ReefReferral in Frameworks */,
+				2414388A2B21FF66006E8062 /* ReefReferral in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,7 +44,7 @@
 		FA9101D62AE717120010CB88 = {
 			isa = PBXGroup;
 			children = (
-				FAFF119B2AE7246100F233CB /* reef-referral-ios */,
+				2474C73A2B2113BE00B69979 /* reef-referral-ios */,
 				FA9101E12AE717120010CB88 /* ReefReferralExample */,
 				FA9101E02AE717120010CB88 /* Products */,
 				FAFF119C2AE7247B00F233CB /* Frameworks */,
@@ -61,6 +65,7 @@
 				FAFF119D2AE7320700F233CB /* Info.plist */,
 				FA9101E22AE717120010CB88 /* ReefReferralExampleApp.swift */,
 				FA9101E42AE717120010CB88 /* ContentView.swift */,
+				2474C73D2B21164C00B69979 /* ReferralSheetView.swift */,
 				FA9101E62AE717160010CB88 /* Assets.xcassets */,
 				FA9101E82AE717160010CB88 /* ReefReferralExample.entitlements */,
 				FA9101E92AE717160010CB88 /* Preview Content */,
@@ -100,7 +105,8 @@
 			);
 			name = ReefReferralExample;
 			packageProductDependencies = (
-				FA9102142AE720160010CB88 /* ReefReferral */,
+				2474C73B2B2113EF00B69979 /* ReefReferral */,
+				241438892B21FF66006E8062 /* ReefReferral */,
 			);
 			productName = ReefReferralExample;
 			productReference = FA9101DF2AE717120010CB88 /* ReefReferralExample.app */;
@@ -131,6 +137,7 @@
 			);
 			mainGroup = FA9101D62AE717120010CB88;
 			packageReferences = (
+				241438882B21FF66006E8062 /* XCRemoteSwiftPackageReference "reef-referral-ios" */,
 			);
 			productRefGroup = FA9101E02AE717120010CB88 /* Products */;
 			projectDirPath = "";
@@ -160,6 +167,7 @@
 			files = (
 				FA9101E52AE717120010CB88 /* ContentView.swift in Sources */,
 				FA9101E32AE717120010CB88 /* ReefReferralExampleApp.swift in Sources */,
+				2474C73E2B21164C00B69979 /* ReferralSheetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +312,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -343,7 +351,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -381,8 +389,24 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		241438882B21FF66006E8062 /* XCRemoteSwiftPackageReference "reef-referral-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Reef-Referral/reef-referral-ios";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		FA9102142AE720160010CB88 /* ReefReferral */ = {
+		241438892B21FF66006E8062 /* ReefReferral */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 241438882B21FF66006E8062 /* XCRemoteSwiftPackageReference "reef-referral-ios" */;
+			productName = ReefReferral;
+		};
+		2474C73B2B2113EF00B69979 /* ReefReferral */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ReefReferral;
 		};

@@ -10,7 +10,7 @@ import ReefReferral
 
 struct ReefReferralSheetView: View {
 
-    @Binding var reef: ReefReferral.ReferralInfo?
+    @Binding var reef: ReefReferral.ReferralStatus?
 
     let image: UIImage
     let title: String
@@ -45,25 +45,25 @@ struct ReefReferralSheetView: View {
 
                     Spacer()
                     Button(action: {
-                        switch reef.senderInfo.rewardEligibility {
+                        switch reef.senderStatus.rewardEligibility {
                         case .not_eligible:
-                            if let senderLinkURL = reef.senderInfo.linkURL {
+                            if let senderLinkURL = reef.senderStatus.linkURL {
                                 UIApplication.shared.open(senderLinkURL)
                             } else {
-                                ReefReferral.logger.error("No referredOfferURL")
+                                print("No referredOfferURL")
                             }
                         case .eligible:
-                            if let rewardURL = reef.senderInfo.offerCodeURL{
+                            if let rewardURL = reef.senderStatus.offerCodeURL{
                                 UIApplication.shared.open(rewardURL)
                             } else {
-                                ReefReferral.logger.error("No rewardURL")
+                                print("No rewardURL")
                             }
                         default:
                             break
                         }
 
                     }) {
-                        switch reef.senderInfo.rewardEligibility {
+                        switch reef.senderStatus.rewardEligibility {
                         case .not_eligible:
                             HStack(spacing: 8) {
                                 Text("Invite friends")
@@ -107,8 +107,8 @@ struct ReefReferralSheetView: View {
                     Spacer()
 
                     VStack(spacing:8) {
-                        if reef.senderInfo.redeemedCount > 0 {
-                            Text("\(reef.senderInfo.redeemedCount) referral successes")
+                        if reef.senderStatus.redeemedCount > 0 {
+                            Text("\(reef.senderStatus.redeemedCount) referral successes")
                                 .foregroundColor(.green)
                                 .bold()
                         }

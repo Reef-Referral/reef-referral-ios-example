@@ -11,10 +11,10 @@ import ReefReferral
 
 extension ContentView {
     class ViewModel: ObservableObject, ReefReferralDelegate {
-        @Published var reef: ReefReferral.ReferralInfo?
+        @Published var reef: ReefReferral.ReferralStatus?
 
-        func infoUpdated(referralInfo: ReefReferral.ReferralInfo) {
-            self.reef = referralInfo
+        func statusUpdated(referralStatus: ReefReferral.ReferralStatus) {
+            self.reef = referralStatus
         }
     }
 }
@@ -44,7 +44,7 @@ struct ContentView: View {
                     }
 
                     Section(header: Text("Sender Status")) {
-                        if let linkURL = reef.senderInfo.linkURL {
+                        if let linkURL = reef.senderStatus.linkURL {
 
                             Button("Set custom ID") {
                                 ReefReferral.shared.setUserId("custom_id_test a as @@.com")
@@ -54,15 +54,15 @@ struct ContentView: View {
                                 openURL(linkURL)
                             }
 
-                            Text("\(reef.senderInfo.redeemedCount ) redeemed")
-                            Text("\(reef.senderInfo.rewardEligibility.rawValue )")
+                            Text("\(reef.senderStatus.redeemedCount ) redeemed")
+                            Text("\(reef.senderStatus.rewardEligibility.rawValue )")
 
-                            if let rewardURL = reef.senderInfo.offerCodeURL {
+                            if let rewardURL = reef.senderStatus.offerCodeURL {
                                 Button(rewardURL.absoluteString) {
                                     openURL(rewardURL)
                                 }
                             }
-                            if reef.senderInfo.rewardEligibility != .redeemed {
+                            if reef.senderStatus.rewardEligibility != .redeemed {
                                 Button("Trigger Referring Success") {
                                     ReefReferral.shared.triggerSenderSuccess()
                                 }
@@ -75,9 +75,9 @@ struct ContentView: View {
                     }
 
                     Section(header: Text("Receiver Status")) {
-                        if reef.receiverInfo.rewardEligibility != ReefReferral.ReceiverOfferStatus.not_eligible {
-                            Text(reef.receiverInfo.rewardEligibility.rawValue )
-                            if let receiverOfferCodeURL = reef.receiverInfo.offerCodeURL {
+                        if reef.receiverStatus.rewardEligibility != ReefReferral.ReceiverOfferStatus.not_eligible {
+                            Text(reef.receiverStatus.rewardEligibility.rawValue )
+                            if let receiverOfferCodeURL = reef.receiverStatus.offerCodeURL {
                                 Button(receiverOfferCodeURL.absoluteString) {
                                     openURL(receiverOfferCodeURL)
                                 }
@@ -94,7 +94,7 @@ struct ContentView: View {
                     Section {
                         Button("Refresh Status") {
                             Task {
-                                if let newInfo = try? await ReefReferral.shared.getReferralInfo() {
+                                if let newInfo = try? await ReefReferral.shared.getReferralStatus() {
                                     self.vm.reef = newInfo
                                 }
                             }
